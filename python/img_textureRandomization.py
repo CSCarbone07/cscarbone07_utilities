@@ -45,7 +45,7 @@ if __name__ == "__main__":
     filename = os.path.join(fileDir, 'sensor_abstract')
 
     random.seed(1)
-    img_total = 10
+    img_total = 100
     format_read = '.png'
     format_write = '.png'
 
@@ -54,7 +54,14 @@ if __name__ == "__main__":
 
     randomRotation = 180
 
-    for i in range(img_total):
+    outImgSize_xy = 1365
+    outImgCrop_original_x = 853
+    outImgCrop_original_y = 2218
+    offsetPercentageRange = 0.25
+    sizePercentageRange = 0.25
+
+        
+    for i in range(1, img_total+1):
         print("Generating image " + str(i))
         img1 = img_list[random.randint(0,len(img_list)-1)]
         img2 = img_list[random.randint(0,len(img_list)-1)]
@@ -86,11 +93,41 @@ if __name__ == "__main__":
         #pil_img2 = pil_img2.rotate(selected_angleRotation2, 0, 1, None, None, None)
         pil_img1 = pil_img1.rotate(selected_angleRotation1)
         pil_img2 = pil_img2.rotate(selected_angleRotation2)
-        # recrop
+        # offset and crop
         #pil_img1 = pil_img1.crop((1024,1024,2048,2048))
         #pil_img2 = pil_img2.crop((1024,1024,2048,2048))
-        pil_img1 = pil_img1.crop((853,853,2218,2218))
-        pil_img2 = pil_img2.crop((853,853,2218,2218))
+        #pil_img1 = pil_img1.crop((853,853,2218,2218))
+        #pil_img2 = pil_img2.crop((853,853,2218,2218))
+        outImgSize = (outImgSize_xy, outImgSize_xy)
+        offset1_x = random.randint(int(-outImgSize_xy * offsetPercentageRange), int(outImgSize_xy *
+            offsetPercentageRange))
+        offset1_y = random.randint(int(-outImgSize_xy * offsetPercentageRange), int(outImgSize_xy *
+            offsetPercentageRange))
+        offset2_x = random.randint(int(-outImgSize_xy * offsetPercentageRange), int(outImgSize_xy *
+            offsetPercentageRange))
+        offset2_y = random.randint(int(-outImgSize_xy * offsetPercentageRange), int(outImgSize_xy *
+            offsetPercentageRange))
+
+        sizeVariation1 = random.uniform(1 - sizePercentageRange, 1 + sizePercentageRange) 
+        sizeVariation2 = random.uniform(1 - sizePercentageRange, 1 + sizePercentageRange) 
+
+        outImgCrop_original_1 = (
+                int(outImgCrop_original_x*sizeVariation1) + offset1_x,
+                int(outImgCrop_original_x*sizeVariation1) + offset1_x,
+                int(outImgCrop_original_y*sizeVariation1) + offset1_y, 
+                int(outImgCrop_original_y*sizeVariation1) + offset1_y)
+        outImgCrop_original_2 = (
+                int(outImgCrop_original_x*sizeVariation2) + offset2_x,
+                int(outImgCrop_original_x*sizeVariation2) + offset2_x,
+                int(outImgCrop_original_y*sizeVariation2) + offset2_y, 
+                int(outImgCrop_original_y*sizeVariation2) + offset2_y)
+
+        pil_img1 = pil_img1.resize(outImgSize, box = outImgCrop_original_1)
+        pil_img2 = pil_img2.resize(outImgSize, box = outImgCrop_original_2)
+
+
+
+
         img_out = Image.blend(pil_img1,pil_img2,alpha)
 
         filename_write = os.path.join(fileDir_write, str(i))
