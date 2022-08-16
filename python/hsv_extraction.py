@@ -14,6 +14,10 @@ if __name__ == '__main__':
     format_read = '.png'
     format_write = '.png'
 
+    conversion_factor_hue = 360/179
+    conversion_factor_sat = 100/255
+    conversion_factor_val = 100/255
+
     print(fileDir)
     print(fileDir_toRead)
 
@@ -58,6 +62,7 @@ if __name__ == '__main__':
             hsv = cv2.cvtColor( img, cv2.COLOR_BGR2HSV)
          
             #/* Split hue, saturation and value of hsv on them */
+            # in opencv the ranges are hue = 0-179, sat = 0-255, val = 0-255
             #cvSplit(hsv, hue, sat, val, 0)
             hue, sat, val = cv2.split(hsv)
             
@@ -121,12 +126,12 @@ if __name__ == '__main__':
             sat_std = np.std(sat)
             val_std = np.std(val)
 
-            print("hue avg " + str(hue_avg))
-            print("hue std " + str(hue_std))
-            print("sat std " + str(sat_avg))
-            print("sat std " + str(sat_std))
-            print("val avg " + str(val_avg))
-            print("val std " + str(val_std))
+            print("hue avg " + str(hue_avg * conversion_factor_hue))
+            print("hue std " + str(hue_std * conversion_factor_hue))
+            print("sat std " + str(sat_avg * conversion_factor_sat))
+            print("sat std " + str(sat_std * conversion_factor_sat))
+            print("val avg " + str(val_avg * conversion_factor_val))
+            print("val std " + str(val_std * conversion_factor_val))
 
             sum_hue = np.append([sum_hue], [hue])
             sum_sat = np.append([sum_sat], [sat])
@@ -143,12 +148,12 @@ if __name__ == '__main__':
     sum_sat_std = np.std(sum_sat)
     sum_val_std = np.std(sum_val)
 
-    print("hue avg " + str(sum_hue_avg))
-    print("hue std " + str(sum_hue_std))
-    print("sat std " + str(sum_sat_avg))
-    print("sat std " + str(sum_sat_std))
-    print("val avg " + str(sum_val_avg))
-    print("val std " + str(sum_val_std))
+    print("hue avg " + str(sum_hue_avg * conversion_factor_hue))
+    print("hue std " + str(sum_hue_std * conversion_factor_hue))
+    print("sat avg " + str(sum_sat_avg * conversion_factor_sat))
+    print("sat std " + str(sum_sat_std * conversion_factor_sat))
+    print("val avg " + str(sum_val_avg * conversion_factor_val))
+    print("val std " + str(sum_val_std * conversion_factor_val))
 
 
 
