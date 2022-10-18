@@ -5,14 +5,16 @@ import cv2
 if __name__ == '__main__':
 
     fileDir = os.path.dirname(os.path.realpath('__file__'))
-    fileDir_toRead = os.path.join(fileDir, 'tmp_toRead/')
-    fileDir_toWrite = os.path.join(fileDir, 'tmp_toWrite/')
+    fileDir_toRead = os.path.join(fileDir, 'tmp_toRead_2/')
+    fileDir_toWrite = os.path.join(fileDir, 'tmp_toWrite_2/')
     filename = os.path.join(fileDir, 'tmp')
     tempImageFileName = os.path.join(fileDir_toRead, "ground_02.png")
 
     
-    format_read = '.png'
-    format_write = '.png'
+    #format_read = '.png'
+    #format_write = '.png'
+    format_read = '.jpg'
+    format_write = '.jpg'
 
     conversion_factor_hue = 360/179
     conversion_factor_sat = 100/255

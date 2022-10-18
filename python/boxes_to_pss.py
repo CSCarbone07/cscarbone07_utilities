@@ -15,13 +15,13 @@ from shapely.geometry.polygon import Polygon
 if __name__ == "__main__":
     
     fileDir = os.path.dirname(os.path.realpath('__file__'))
-    fileDir_read = os.path.join(fileDir, 'tmp_toRead/')
-    fileDir_write = os.path.join(fileDir, 'tmp_toWrite/')
+    fileDir_read = os.path.join(fileDir, 'tmp_toRead_boxes/')
+    fileDir_write = os.path.join(fileDir, 'tmp_toWrite_boxes/')
     filename = os.path.join(fileDir, 'sensor_abstract')
 
     random.seed(1)
     img_total = 100
-    format_read1 = '.jpg'
+    format_read1 = '.png'
     format_read2 = '.txt'
     format_write = '.png'
 
@@ -29,12 +29,6 @@ if __name__ == "__main__":
     #print(img_list)
 
     randomRotation = 180
-
-    outImgSize_xy = 1365
-    outImgCrop_original_x = 853
-    outImgCrop_original_y = 2218
-    offsetPercentageRange = 0.25
-    sizePercentageRange = 0.25
 
     color_ground = (0,0,0)
     color_plants = (255,255,255)
@@ -98,11 +92,11 @@ if __name__ == "__main__":
             #height, width, depth = tagimg.shape
             for hi in range(0, h):
                 for wi in range(0, w): 
-                    if img_original[hi,wi,0]>=polygon_colorRange_minimum and
+                    if img_original[hi,wi,0]>=polygon_colorRange_minimum and \
                     img_original[hi,wi,0]<=polygon_colorRange_maximum \
-                    and img_original[hi,wi,1]>=polygon_colorRange_minimum and
+                    and img_original[hi,wi,1]>=polygon_colorRange_minimum and \
                     img_original[hi,wi,1]<=polygon_colorRange_maximum \
-                    and img_original[hi,wi,2]>=polygon_colorRange_minimum and
+                    and img_original[hi,wi,2]>=polygon_colorRange_minimum and \
                     img_original[hi,wi,2]<=polygon_colorRange_maximum:
                         #tagimg[hi,wi] = [150,150,150]
                         img[hi,wi,0] = 128 
